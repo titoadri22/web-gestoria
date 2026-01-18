@@ -210,13 +210,18 @@ h6 {
 /* Logo Header */
 .nav__logo-img {
     height: 60px;
-    width: auto;
+    width: 60px;
+    object-fit: cover;
     transition: var(--transition);
-    border-radius: 4px;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    background: white;
 }
 
 .header.scrolled .nav__logo-img {
     height: 50px;
+    width: 50px;
 }
 
 .nav__list {
@@ -847,9 +852,14 @@ h6 {
 }
 
 .footer__logo {
-    height: 70px;
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
     margin-bottom: 24px;
-    border-radius: 4px;
+    border-radius: 50%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    background: white;
 }
 
 .footer__description {
@@ -908,6 +918,13 @@ h6 {
 
 .footer__column ul li {
     margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.footer__column ul li a {
+    display: inline;
 }
 
 .footer__column ul li a,
