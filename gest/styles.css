@@ -42,6 +42,27 @@
     --transition-slow: all 0.5s ease;
 }
 
+/* Performance optimizations */
+.servicio__card,
+.contacto__card,
+.feature,
+.btn {
+    will-change: transform;
+}
+
+.servicios,
+.nosotros,
+.contacto {
+    contain: layout style;
+}
+
+/* Content visibility for off-screen optimization */
+.contacto,
+footer {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+}
+
 /* Reset & Base */
 *,
 *::before,
@@ -284,7 +305,7 @@ h6 {
     justify-content: center;
     background:
         linear-gradient(135deg, rgba(26, 22, 18, 0.85) 0%, rgba(45, 37, 32, 0.9) 100%),
-        url('hero-bg.png') center/cover no-repeat;
+        url('hero-bg-optimized.jpg') center/cover no-repeat;
     overflow: hidden;
 }
 
@@ -549,18 +570,17 @@ h6 {
 }
 
 .nosotros__content {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 60px;
-    align-items: center;
+    display: block;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .nosotros__text .section__subtitle {
-    text-align: left;
+    text-align: center;
 }
 
 .nosotros__text .section__title {
-    text-align: left;
+    text-align: center;
 }
 
 .nosotros__description {
@@ -568,6 +588,7 @@ h6 {
     font-size: 1.0625rem;
     margin-bottom: 40px;
     line-height: 1.8;
+    text-align: center;
 }
 
 .nosotros__features {
@@ -653,6 +674,74 @@ h6 {
     font-weight: 500;
 }
 
+/* Empresas y Autónomos Section */
+.nosotros__empresas {
+    display: flex;
+    align-items: center;
+}
+
+.empresas__card {
+    background: linear-gradient(135deg, #8B6914 0%, #6B5010 100%) !important;
+    padding: 50px 35px;
+    border-radius: 24px;
+    text-align: center !important;
+    box-shadow: 0 20px 60px rgba(139, 105, 20, 0.3);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center;
+    gap: 0 !important;
+    align-items: center !important;
+}
+
+.empresas__card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.empresas__icon {
+    width: 70px !important;
+    height: 70px !important;
+    max-width: 70px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-radius: 50%;
+    margin: 0 auto 24px;
+    backdrop-filter: blur(10px);
+    flex-shrink: 0;
+}
+
+.empresas__icon svg {
+    width: 35px !important;
+    height: 35px !important;
+    max-width: 35px !important;
+    color: white !important;
+}
+
+.empresas__title {
+    font-size: 1.375rem;
+    color: white !important;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.empresas__description {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+}
+
 /* =====================================================
    CONTACTO SECTION
    ===================================================== */
@@ -726,6 +815,49 @@ h6 {
 
 .contacto__card-content a:hover {
     color: var(--color-primary-dark);
+}
+
+.contacto__map {
+    margin-top: 20px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    border: 3px solid var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    padding: 4px;
+    transition: all 0.3s ease;
+}
+
+.contacto__map:hover {
+    box-shadow: 0 12px 40px rgba(139, 105, 20, 0.3);
+    transform: translateY(-3px);
+}
+
+.contacto__map iframe {
+    display: block;
+    border-radius: 12px;
+}
+
+/* Tarjeta de ubicación con mapa */
+.contacto__card--ubicacion {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.contacto__card--ubicacion .contacto__card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.contacto__card-map {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.contacto__card-map iframe {
+    display: block;
 }
 
 /* Form Styles */
@@ -833,6 +965,28 @@ h6 {
 .form__checkbox label a {
     color: var(--color-primary);
     text-decoration: underline;
+}
+
+/* Honeypot - Hidden from users, visible to bots */
+.form__honeypot {
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+}
+
+.form__honeypot input,
+.form__honeypot label {
+    position: absolute !important;
+    left: -9999px !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 /* =====================================================
@@ -1128,6 +1282,19 @@ h6 {
         font-size: 2.25rem;
     }
 
+    /* Empresas Mobile */
+    .nosotros__empresas {
+        margin-top: 40px;
+    }
+
+    .empresas__card {
+        padding: 35px 25px;
+    }
+
+    .empresas__title {
+        font-size: 1.25rem;
+    }
+
     /* Contacto Mobile */
     .contacto__card {
         flex: 1 1 100%;
@@ -1180,12 +1347,39 @@ h6 {
 }
 
 /* =====================================================
-   ANIMATIONS
+   ANIMATIONS & EFFECTS PREMIUM
    ===================================================== */
+
+/* Scroll Progress Bar */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    z-index: 10001;
+    transition: width 0.1s ease;
+    box-shadow: 0 0 10px var(--color-primary);
+}
+
+/* Scroll Animations */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-on-scroll.animate-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fade In Up Animation */
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px);
     }
 
     to {
@@ -1194,11 +1388,597 @@ h6 {
     }
 }
 
-.animate-on-scroll {
-    opacity: 0;
-    transform: translateY(30px);
+/* Slide In Animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-.animate-on-scroll.animated {
-    animation: fadeInUp 0.6s ease forwards;
+/* Ripple Animation */
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Confetti Fall Animation */
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+    }
+}
+
+/* Spin Animation */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+/* Float Animation */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Glow Animation */
+@keyframes glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 5px var(--color-accent), 0 0 10px var(--color-accent);
+    }
+
+    50% {
+        box-shadow: 0 0 20px var(--color-accent), 0 0 40px var(--color-accent);
+    }
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Cursor Follower */
+.cursor-follower {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background 0.3s;
+    mix-blend-mode: difference;
+}
+
+.cursor-follower.cursor-grow {
+    width: 50px;
+    height: 50px;
+    background: rgba(139, 105, 20, 0.2);
+}
+
+/* Service Card 3D Effect */
+.servicio__card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+}
+
+.servicio__card:hover {
+    box-shadow: 0 30px 60px rgba(26, 22, 18, 0.2);
+}
+
+/* Button Hover Effects */
+.btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Form Group Focus Effect */
+.form__group.focused input,
+.form__group.focused textarea,
+.form__group.focused select {
+    box-shadow: 0 0 0 3px rgba(139, 105, 20, 0.2);
+}
+
+.form__group.focused label {
+    color: var(--color-primary);
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    max-width: 400px;
+    padding: 20px 24px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    z-index: 10000;
+    animation: slideIn 0.4s ease;
+}
+
+.notification__content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.notification__icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+    color: white;
+}
+
+.notification--success .notification__icon {
+    background: #10B981;
+}
+
+.notification--error .notification__icon {
+    background: #EF4444;
+}
+
+.notification__message {
+    font-size: 0.9375rem;
+    color: var(--text-dark);
+}
+
+.notification__close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.3s;
+}
+
+.notification__close:hover {
+    color: var(--text-dark);
+}
+
+/* Hero Parallax Variables */
+.hero__content {
+    transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+    will-change: transform, opacity;
+}
+
+/* Feature Hover Animation */
+.feature {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateX(10px);
+}
+
+.feature:hover .feature__icon {
+    animation: pulse 0.6s ease;
+}
+
+/* Contact Card Shimmer */
+.contacto__card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent);
+    transition: left 0.5s ease;
+}
+
+.contacto__card:hover::before {
+    left: 100%;
+}
+
+/* Empresas Card Glow */
+.empresas__card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.empresas__card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 80px rgba(139, 105, 20, 0.4);
+}
+
+/* Header Transition */
+.header {
+    transition: transform 0.3s ease, background 0.3s ease, padding 0.3s ease;
+}
+
+/* Smooth Loading Transition */
+body {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* Service Link Arrow Animation */
+.servicio__link span {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.servicio__link:hover span {
+    transform: translateX(8px);
+}
+
+/* Footer Link Hover */
+.footer__column a {
+    position: relative;
+}
+
+.footer__column a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-accent);
+    transition: width 0.3s ease;
+}
+
+.footer__column a:hover::after {
+    width: 100%;
+}
+
+/* Scroll Indicator Bounce */
+.hero__scroll-link {
+    animation: float 2s ease-in-out infinite;
+}
+
+/* Nav CTA Button Glow on Hover */
+.nav__cta:hover {
+    box-shadow: 0 0 20px rgba(139, 105, 20, 0.5);
+}
+
+/* =====================================================
+   NEW CREATIVE EFFECTS
+   ===================================================== */
+
+/* Section Reveal on Scroll */
+section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+section.section-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* Particle Float Animation */
+@keyframes particleFloat {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.6;
+    }
+
+    90% {
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translate(100px, -200px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Hero Particles */
+.hero-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: particleFloat 15s ease-in-out infinite;
+}
+
+.particle:nth-child(odd) {
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.particle:nth-child(3n) {
+    width: 8px;
+    height: 8px;
+    background: var(--color-primary);
+    opacity: 0.3;
+}
+
+/* Cursor Trail */
+.cursor-trail {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    opacity: 0.6;
+    animation: cursorFade 1s ease-out forwards;
+    z-index: 9999;
+}
+
+@keyframes cursorFade {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
+}
+
+/* Highlight Text Animation */
+.highlight {
+    background: linear-gradient(120deg, var(--color-accent) 0%, var(--color-primary) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-size: 200% 100%;
+    animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.highlight.highlight-animate {
+    position: relative;
+}
+
+.highlight.highlight-animate::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: underlineGrow 1s ease forwards 0.5s;
+}
+
+@keyframes underlineGrow {
+    to {
+        transform: scaleX(1);
+    }
+}
+
+/* Success Overlay */
+.success-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 22, 18, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10002;
+    animation: fadeIn 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.success-overlay.fade-out {
+    animation: fadeOut 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.success-checkmark {
+    width: 120px;
+    height: 120px;
+}
+
+.success-checkmark svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.5));
+}
+
+.success-checkmark circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    animation: strokeCircle 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.success-checkmark path {
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: strokeCheck 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+}
+
+@keyframes strokeCircle {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes strokeCheck {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Button clean hover - no magnetic */
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(139, 105, 20, 0.4);
+}
+
+/* Service Icon on Card Hover */
+.servicio__icon {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.servicio__card:hover .servicio__icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 10px 30px rgba(139, 105, 20, 0.3);
+}
+
+/* Contact Card Hover */
+.contacto__card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.contacto__card:hover {
+    transform: translateX(10px);
+}
+
+.contacto__icon {
+    transition: transform 0.3s ease;
+}
+
+.contacto__card:hover .contacto__icon {
+    transform: scale(1.1);
+}
+
+/* Feature enhanced hover */
+.feature {
+    padding: 16px;
+    margin: -16px;
+    border-radius: 12px;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.feature:hover {
+    background: rgba(139, 105, 20, 0.05);
 }
